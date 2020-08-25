@@ -38,19 +38,18 @@ public class ConfigResourceParser implements ResourceParser {
         String namespaceId = req.getParameter("tenant");
         String groupName = req.getParameter("group");
         String dataId = req.getParameter("dataId");
-        
         StringBuilder sb = new StringBuilder();
         
         if (StringUtils.isNotBlank(namespaceId)) {
             sb.append(namespaceId);
         }
-        
         sb.append(Resource.SPLITTER);
-        
-        if (StringUtils.isBlank(dataId)) {
-            sb.append("*").append(Resource.SPLITTER).append(AUTH_CONFIG_PREFIX).append("*");
-        } else {
-            sb.append(groupName).append(Resource.SPLITTER).append(AUTH_CONFIG_PREFIX).append(dataId);
+        if (StringUtils.isNotBlank(groupName)) {
+            sb.append(groupName);
+        }
+        sb.append(Resource.SPLITTER).append(AUTH_CONFIG_PREFIX);
+        if (StringUtils.isNotBlank(dataId)) {
+            sb.append(dataId);
         }
         
         return sb.toString();
